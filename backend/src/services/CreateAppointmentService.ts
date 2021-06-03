@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { getCustomRepository } from 'typeorm';
 import Appointment from "../models/Appointment";
 import AppointmentRepository from "../repositories/AppointmentsRepository";
 // eslint-disable-next-line import/order
@@ -11,16 +12,13 @@ interface Request {
 
 class CreateAppointmentService {
 
-  private appointmentRepository: AppointmentRepository
+  public async execute({ provider, date }: Request): Promise<Appointment>{
 
-  constructor(appointmentRepository: AppointmentRepository){
-    this.appointmentRepository = appointmentRepository;
-  }
+    const appointmentRepository = getCustomRepository(AppointmentRepository)
 
-  public execute({ provider, date }: Request): Appointment{
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = this.appointmentRepository.findByDate(
+    const findAppointmentInSameDate = await appointmentRepository.findByDate(
       appointmentDate,
     )
 
@@ -28,10 +26,12 @@ class CreateAppointmentService {
         throw Error('This appointment is already booked')
       }
 
-    const appointment = this.appointmentRepository.create({
+    const appointment = appointmentRepository.create({
       provider,
       date:appointmentDate,
     })
+
+    await appointmentRepository.save(appointment)
 
     return appointment;
 
