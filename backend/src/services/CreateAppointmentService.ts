@@ -5,6 +5,7 @@ import Appointment from "../models/Appointment";
 import AppointmentRepository from "../repositories/AppointmentsRepository";
 // eslint-disable-next-line import/order
 import { startOfHour } from 'date-fns'
+import AppError from '../errors/AppErros';
 
 interface Request {
   provider_id: string;
@@ -24,7 +25,7 @@ class CreateAppointmentService {
     )
 
       if(findAppointmentInSameDate){
-        throw Error('This appointment is already booked')
+        throw new AppError('This appointment is already booked')
       }
 
     const appointment = appointmentRepository.create({
