@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
 import { Router } from 'express';
@@ -13,6 +14,7 @@ import CreateUserService from '../services/CreateUsers';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 import uploadConfig from '../config/upload'
+import updateUserAvatarService from '../services/UpdateUserAvatarService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig)
@@ -42,9 +44,21 @@ const upload = multer(uploadConfig)
 
 usersRouter.patch('/avatar', ensureAuthenticated,upload.single('avatar') ,async (request, response) => {
 
-  console.log(request.file)
+  try {
+    const updateUserAvatar = new updateUserAvatarService();
 
-  return response.json({ ok : true})
+    const user = await updateUserAvatar.execute({
+      user_id: request.user.id,
+      avatarFilename: request.file.filename
+    })
+
+    delete user.password;
+
+    return response.json(user)
+
+  } catch (err) {
+    return response.status(400).json({ error: err.message })
+  }
 })
 
 export default usersRouter;
