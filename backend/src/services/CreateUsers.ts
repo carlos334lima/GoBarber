@@ -1,5 +1,6 @@
+/* eslint-disable spaced-comment */
 import { getRepository } from 'typeorm';
-import { hash } from 'bcryptjs';
+import { hash } from 'bcryptjs'; //password encryption
 import User from '../models/User';
 
 interface Request {
