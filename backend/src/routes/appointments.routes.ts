@@ -9,8 +9,11 @@ import CreateAppointmentService from '../services/CreateAppointmentService';
 
 // eslint-disable-next-line import/order
 import { getCustomRepository } from 'typeorm';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
+
+appointmentsRouter.use(ensureAuthenticated)
 
 appointmentsRouter.get('/', async (request, response) => {
 
