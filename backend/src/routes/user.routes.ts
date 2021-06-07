@@ -3,14 +3,19 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns'
 
+import multer from 'multer'
 import AppointmentRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
 // eslint-disable-next-line import/order
 import { getCustomRepository } from 'typeorm';
 import CreateUserService from '../services/CreateUsers';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
+import uploadConfig from '../config/upload'
 
 const usersRouter = Router();
+const upload = multer(uploadConfig)
 
 
  usersRouter.post('/', async (request, response) => {
@@ -33,6 +38,13 @@ const usersRouter = Router();
   } catch (err) {
     return response.status(400).json({ error: err.message })
   }
+})
+
+usersRouter.patch('/avatar', ensureAuthenticated,upload.single('avatar') ,async (request, response) => {
+
+  console.log(request.file)
+
+  return response.json({ ok : true})
 })
 
 export default usersRouter;
