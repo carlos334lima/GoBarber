@@ -1,8 +1,12 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
+import GlobalStyles from './styles/global';
 
-function App() {
-  return <div />;
-}
+const App: React.FC = () => (
+  <>
+    <h1>Hello</h1>
+    <GlobalStyles />
+  </>
+);
 
 export default App;
