@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable */
 import styled from 'styled-components';
 
 /* import Tooltip from '../Tooltip'; */
@@ -9,7 +9,7 @@ interface ContainerProps {
   isErrored: boolean;
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div`
   background: #232129;
   border-radius: 10px;
   border: 2px solid #212329;

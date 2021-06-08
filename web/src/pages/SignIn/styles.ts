@@ -1,8 +1,8 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable */
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-import SignIn from '../../assets/sign-in-background.png';
+import signInBackground from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
   height: 100vh;
@@ -12,11 +12,12 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   width: 100%;
   max-width: 700px;
+  }
 `;
 
 const appearFromLeft = keyframes`
@@ -32,9 +33,9 @@ const appearFromLeft = keyframes`
 
 export const AnimationContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   animation: ${appearFromLeft} 1s;
   form {
     margin: 80px 0;
@@ -43,6 +44,7 @@ export const AnimationContainer = styled.div`
     h1 {
       margin-bottom: 24px;
     }
+  }
     a {
       color: #f4ede8;
       display: block;
@@ -62,18 +64,16 @@ export const AnimationContainer = styled.div`
     transition: color 0.2s;
     display: flex;
     align-items: center;
-    transition: color 0.2s;
     svg {
       margin-right: 16px;
     }
     &:hover {
       color: ${shade(0.2, '#ff9000')};
     }
-  }
 `;
 
 export const Background = styled.div`
   flex: 1;
-  background: url(${SignIn}) no-repeat center;
+  background: url(${signInBackground}) no-repeat center;
   background-size: cover;
 `;
