@@ -1,5 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable linebreak-style */
+/* eslint-disable */
 import styled from 'styled-components';
 
 export const Container = styled.div`
