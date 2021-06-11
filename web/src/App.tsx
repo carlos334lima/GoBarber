@@ -1,11 +1,15 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
+
 import SignIn from './pages/SignIn';
 import GlobalStyles from './styles/global';
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => (
   <>
-    <SignIn />
+    <AuthProvider>
+      <SignIn />
+    </AuthProvider>
     <GlobalStyles />
   </>
 );
