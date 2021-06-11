@@ -11,7 +11,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import LogoImg from '../../assets/logo.svg';
 import getValidationErros from '../../utils/getValidationError';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 /*
 import { Link, useHistory } from 'react-router-dom';
@@ -27,7 +27,7 @@ interface SignFormData {
 
 const SignIn: React.FC = () => {
 
-  const { SignIn } = useContext(AuthContext)
+  const { SignIn, user } = useAuth()
 
   const FormRef = useRef<FormHandles>(null);
 
