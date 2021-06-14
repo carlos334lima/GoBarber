@@ -46,9 +46,13 @@ const SignIn: React.FC = () => {
         abortEarly: false,
       });
     } catch (err) {
+     if(err instanceof Yup.ValidationError ){
       const erros = getValidationErros(err);
 
       FormRef.current?.setErrors(erros);
+     }
+
+
     }
 
     SignIn({
@@ -56,7 +60,7 @@ const SignIn: React.FC = () => {
       password: data.password
     })
 
-  }, []);
+  }, [SignIn]);
 
   return (
     <Container>
