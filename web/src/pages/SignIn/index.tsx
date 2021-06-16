@@ -16,6 +16,8 @@ import { useToast } from '../../hooks/ToastContext';
 
 /*
 import { Link, useHistory } from 'react-router-dom';
+
+
 import { useToast } from '../../hooks/toast';
  */
 
@@ -56,7 +58,11 @@ const SignIn: React.FC = () => {
 
           FormRef.current?.setErrors(erros);
         }
-        addToast();
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Ocorreu um error'
+        });
       }
     },
     [SignIn, addToast],
