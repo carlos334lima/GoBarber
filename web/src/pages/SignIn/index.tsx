@@ -14,19 +14,14 @@ import getValidationErros from '../../utils/getValidationError';
 import { useAuth } from '../../hooks/AuthContext';
 import { useToast } from '../../hooks/ToastContext';
 
-/*
 import { Link, useHistory } from 'react-router-dom';
-
-
-import { useToast } from '../../hooks/toast';
- */
-
 interface SignFormData {
   email: string;
   password: string;
 }
 
 const SignIn: React.FC = () => {
+
   const { SignIn } = useAuth();
   const { addToast } = useToast();
 
@@ -95,10 +90,10 @@ const SignIn: React.FC = () => {
             <a href="">Esqueci Minha Senha</a>
           </Form>
 
-          <a href="">
+          <Link to="signup">
             <FiLogIn />
             Criar Conta
-          </a>
+          </Link>
         </AnimationContainer>
       </Content>
 

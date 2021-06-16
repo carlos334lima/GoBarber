@@ -9,11 +9,13 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErros from '../../utils/getValidationError';
 
+import { Link, useHistory } from 'react-router-dom';
+
 /*
 
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+
 
 
 import { useToast } from '../../hooks/toast';
@@ -76,10 +78,10 @@ const SignUp: React.FC = () => {
             <Button type="submit">Cadastrar</Button>
           </Form>
 
-          <a href="">
+          <Link to="/">
             <FiArrowLeft />
             Voltar Para Login
-          </a>
+          </Link>
         </AnimationContainer>
       </Content>
     </Container>
