@@ -36,6 +36,18 @@ const ToastContainer: React.FC = () => {
           <FiXCircle size={18} />
         </button>
       </Toast>
+      <Toast type="success" hasDescription>
+        <FiAlertCircle size={20} />
+
+        <div>
+          <strong>Aconteceu um erro</strong>
+
+        </div>
+
+        <button>
+          <FiXCircle size={18} />
+        </button>
+      </Toast>
     </Container>
   );
 };

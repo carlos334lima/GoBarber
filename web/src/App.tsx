@@ -1,19 +1,17 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable */
 import React from 'react';
 
 import SignIn from './pages/SignIn';
 import GlobalStyles from './styles/global';
-import { AuthProvider } from './context/AuthContext';
-import ToastContainer from './components/ToastContainer';
 
-/* import Toast from './components/ToastContainer/Toast' */
+
+import AppProvider from './hooks';
 
 const App: React.FC = () => (
   <>
-    <AuthProvider>
+    <AppProvider>
       <SignIn />
-    </AuthProvider>
-    <ToastContainer />
+    </AppProvider>
     <GlobalStyles />
   </>
 );

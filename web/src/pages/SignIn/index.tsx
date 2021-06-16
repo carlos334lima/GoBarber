@@ -11,56 +11,56 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import LogoImg from '../../assets/logo.svg';
 import getValidationErros from '../../utils/getValidationError';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/AuthContext';
+import { useToast } from '../../hooks/ToastContext';
 
 /*
 import { Link, useHistory } from 'react-router-dom';
-
-
 import { useToast } from '../../hooks/toast';
  */
 
 interface SignFormData {
-  email: string,
+  email: string;
   password: string;
 }
 
 const SignIn: React.FC = () => {
-
-  const { SignIn, user } = useAuth()
+  const { SignIn } = useAuth();
+  const { addToast } = useToast();
 
   const FormRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: SignFormData) => {
-    try {
-      FormRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: SignFormData) => {
+      try {
+        FormRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail Obrigatório')
-          .email('Digite um email válido'),
-        password: Yup.string().required( 'Senha Obrigatória'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail Obrigatório')
+            .email('Digite um email válido'),
+          password: Yup.string().required('Senha Obrigatória'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-     if(err instanceof Yup.ValidationError ){
-      const erros = getValidationErros(err);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      FormRef.current?.setErrors(erros);
-     }
+        await SignIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const erros = getValidationErros(err);
 
-
-    }
-
-    SignIn({
-      email: data.email,
-      password: data.password
-    })
-
-  }, [SignIn]);
+          FormRef.current?.setErrors(erros);
+        }
+        addToast();
+      }
+    },
+    [SignIn, addToast],
+  );
 
   return (
     <Container>
