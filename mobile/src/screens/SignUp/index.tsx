@@ -9,13 +9,16 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 import logoImg from '../../assets/logo.png';
-import { Container, Title } from './style';
+import { Container, Title, BackToSignIn, BackToSignInText } from './style';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
+  const { navigate } = useNavigation();
+
   return (
     <>
       <KeyboardAvoidingView
@@ -31,9 +34,10 @@ const SignIn: React.FC = () => {
             <Image source={logoImg} />
 
             <View>
-              <Title>Faça seu Logon</Title>
+              <Title>Crie sua Conta</Title>
             </View>
 
+            <Input name="name" icon="user" placeholder="Nome" />
             <Input name="email" icon="mail" placeholder="E-mail" />
             <Input name="password" icon="lock" placeholder="Senha" />
 
@@ -41,6 +45,11 @@ const SignIn: React.FC = () => {
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <BackToSignIn onPress={() => navigate('SignIn')}>
+        <Icon name="arrow-left" size={20} color="#fff" />
+        <BackToSignInText>Voltar para logon</BackToSignInText>
+      </BackToSignIn>
     </>
   );
 };
