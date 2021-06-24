@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import {
   Image,
@@ -10,6 +10,8 @@ import {
 
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 import logoImg from '../../assets/logo.png';
 import { Container, Title, BackToSignIn, BackToSignInText } from './style';
 
@@ -18,6 +20,12 @@ import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
   const { navigate } = useNavigation();
+
+  const formRef = useRef<FormHandles>(null);
+
+  function handleSignUp(data: Object) {
+    console.log(data);
+  }
 
   return (
     <>
@@ -37,11 +45,15 @@ const SignIn: React.FC = () => {
               <Title>Crie sua Conta</Title>
             </View>
 
-            <Input name="name" icon="user" placeholder="Nome" />
-            <Input name="email" icon="mail" placeholder="E-mail" />
-            <Input name="password" icon="lock" placeholder="Senha" />
+            <Form onSubmit={handleSignUp} ref={formRef}>
+              <Input name="name" icon="user" placeholder="Nome" />
+              <Input name="email" icon="mail" placeholder="E-mail" />
+              <Input name="password" icon="lock" placeholder="Senha" />
+            </Form>
 
-            <Button onPress={() => console.log()}>Entrar</Button>
+            <Button onPress={() => formRef.current?.submitForm()}>
+              Entrar
+            </Button>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/ban-types */
+import React, { useCallback, useRef } from 'react';
 
 import {
   Image,
@@ -9,6 +10,8 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 import { useNavigation } from '@react-navigation/native';
 import logoImg from '../../assets/logo.png';
 import {
@@ -24,7 +27,12 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
   const { navigate } = useNavigation();
+
+  const handleSignIn = useCallback((data: Object) => {
+    console.log(data);
+  }, []);
 
   return (
     <>
@@ -44,10 +52,18 @@ const SignIn: React.FC = () => {
               <Title>Faça seu Logon</Title>
             </View>
 
-            <Input name="email" icon="mail" placeholder="E-mail" />
-            <Input name="password" icon="lock" placeholder="Senha" />
+            <Form onSubmit={handleSignIn} ref={formRef}>
+              <Input name="email" icon="mail" placeholder="E-mail" />
+              <Input name="password" icon="lock" placeholder="Senha" />
+            </Form>
 
-            <Button onPress={() => console.log()}>Entrar</Button>
+            <Button
+              onPress={() => {
+                formRef.current?.submitForm();
+              }}
+            >
+              Entrar
+            </Button>
 
             <ForgotPassword onPress={() => console.log()}>
               <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
