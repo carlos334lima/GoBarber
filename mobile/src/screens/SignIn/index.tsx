@@ -1,22 +1,29 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import React, { useCallback, useRef } from 'react';
-
 import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  View,
-  ScrollView,
-  TextInput,
   Alert,
+  Image,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  TextInput,
 } from 'react-native';
-
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
+
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
-import { useNavigation } from '@react-navigation/native';
+
+import { useAuth } from '../../hooks/auth';
+
+import getValidationErrors from '../../utils/getValidationError';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+
 import logoImg from '../../assets/logo.png';
+
 import {
   Container,
   Title,
@@ -26,21 +33,17 @@ import {
   CreateAccountButtonText,
 } from './style';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import getValidationErrors from '../../utils/getValidationError';
-import { useAuth } from '../../hooks/auth';
+interface SignInFormData {
+  email: string;
+  password: string;
+}
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
-  const { navigate } = useNavigation();
-  const { signIn } = useAuth();
+  const navigation = useNavigation();
 
-  interface SignInFormData {
-    email: string;
-    password: string;
-  }
+  const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -63,6 +66,8 @@ const SignIn: React.FC = () => {
           password: data.password,
         });
       } catch (err) {
+        console.log(err);
+
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
@@ -95,19 +100,22 @@ const SignIn: React.FC = () => {
             <Image source={logoImg} />
 
             <View>
-              <Title>Faça seu Logon</Title>
+              <Title>Faça seu logon</Title>
             </View>
-
-            <Form onSubmit={handleSignIn} ref={formRef}>
+            <Form ref={formRef} onSubmit={handleSignIn}>
               <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
                 name="email"
                 icon="mail"
                 placeholder="E-mail"
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
                 returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
               />
+
               <Input
                 ref={passwordInputRef}
                 name="password"
@@ -129,15 +137,16 @@ const SignIn: React.FC = () => {
               Entrar
             </Button>
 
-            <ForgotPassword onPress={() => console.log()}>
+            <ForgotPassword onPress={() => {}}>
               <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
             </ForgotPassword>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton onPress={() => navigate('SignUp')}>
+      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
         <Icon name="log-in" size={20} color="#ff9000" />
+
         <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
       </CreateAccountButton>
     </>
